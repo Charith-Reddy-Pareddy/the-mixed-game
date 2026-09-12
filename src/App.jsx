@@ -191,7 +191,7 @@ function Positions() {
             equilibrium condition. 90 of the 94 mixed states on this board
             share this exact shape, a vertical lane choice.
           </CaseCard>
-          <CaseCard tag="The professor's position" state="(0, 0, 1, 1, 0)" title="Players at (0,0) and (1,1) &mdash; his own sketch">
+          <CaseCard tag="Corner duel" state="(0, 0, 1, 1, 0)" title="Players at (0,0) and (1,1) &mdash; sketched at the meeting">
             This is the board position drawn at the meeting, coordinate for
             coordinate: the carrier pinned in the back corner{' '}
             <span className="mono">(0, 0)</span>, the defender diagonally
@@ -261,7 +261,7 @@ function Positions() {
             between the two.&rdquo;
           </p>
           <p className="callout-body">
-            The professor&apos;s own position above crosses U/L, not L/R, so
+            The corner duel above crosses U/L, not L/R, so
             the cleanest match to this exact sentence is a different state,
             (1, 1, 1, 0, 1) &mdash; support exactly <span className="mono">
             {'{L, R}'}</span>, both actions equally good, no vertical option
