@@ -22,7 +22,7 @@ DEFAULT_SOURCE = HERE.parent / "Soccer Markov Nash Equilibria"
 FIGURES = [
     "kickoff.png",
     "showcase.png",
-    "positions.png",
+    "positions_web.png",
     "mechanism.png",
     "rps_vs_soccer.png",
     "rule_fingerprints.png",

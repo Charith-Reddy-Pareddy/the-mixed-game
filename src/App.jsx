@@ -33,7 +33,7 @@ function Hero() {
       <div className="hero-inner">
         <p className="eyebrow">Multi-agent reinforcement learning &middot; game theory</p>
         <h1 className="hero-title">
-          Some situations in soccer <em>demand</em> a bluff.
+          Two players, one ball, and sometimes <em>no safe move</em>.
         </h1>
         <p className="hero-lede">
           A discrete soccer Markov game, solved exactly &mdash; no training run,
@@ -172,19 +172,13 @@ function Positions() {
           two players are, which moves are genuinely live, and why the
           payoffs leave a player with no honest reason to prefer one action
           over another &mdash; the matrix itself, not a summary statistic like
-          entropy. Four representative cases, read directly off the exact
-          solver:
+          entropy. Reading each card below: the board position (blue = player
+          0, green = player 1, the orange dot is the ball, arrow thickness =
+          move probability), and the stage game as a node-and-arrow graph
+          &mdash; a lit node is a stable outcome, a closed loop of arrows means
+          no cell is safe. Four representative cases, read directly off the
+          exact solver:
         </p>
-        <figure className="figure-frame wide">
-          <img src={`${BASE}figures/positions.png`} alt="Three board-and-graph pairs: a pure state with one stable outcome, an indifference case where the carrier only ever chooses between left and right, and a genuine three-action mix." />
-          <figcaption>
-            each pair: the board position (blue = player 0, green = player 1,
-            the orange dot is the ball, arrow thickness = move probability),
-            and the stage game redrawn as a node-and-arrow graph &mdash; a lit
-            node is a stable outcome, a closed loop of arrows means no cell is
-            safe.
-          </figcaption>
-        </figure>
 
         <div className="case-grid">
           <CaseCard tag="Two-action mix" state="(0, 1, 1, 1, 0)" title="The typical shape: which lane to take">
@@ -227,6 +221,15 @@ function Positions() {
           </CaseCard>
         </div>
 
+        <figure className="figure-frame wide">
+          <img src={`${BASE}figures/positions_web.png`} alt="Four boards, one per case above: blue and green discs are the two players, the orange dot is the ball, and arrows show each player's move probabilities." />
+          <figcaption>
+            the four cases above, drawn: blue = player 0, green = player 1,
+            the orange dot is the ball, arrow thickness = probability of that
+            move.
+          </figcaption>
+        </figure>
+
         <div className="callout">
           <p className="callout-quote">
             &ldquo;When we move right and when we move left, there&apos;s an
@@ -242,14 +245,21 @@ function Positions() {
           </p>
         </div>
 
+        <p>
+          Three more cases live in the full write-up: the exact <em>mirror</em>{' '}
+          of the two-action case (value negated to 17 decimal places), a hedge
+          so shallow (97.5% / 2.5%) that rounding it to &ldquo;pure&rdquo;
+          would misread the game, and this project&apos;s own tackle rule
+          producing the same duel by a completely different mechanism &mdash;
+          each with its board, its node-and-arrow graph, and its exact
+          4&times;4 matrix.{' '}
+          <a href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/positions.pdf">
+            All seven cases, as a PDF &rarr;
+          </a>
+        </p>
+
         <figure className="figure-frame wide">
           <img src={`${BASE}figures/showcase.png`} alt="Six mixed states drawn as boards with weighted arrows for each player's move probabilities, from a near-even split to a mirror-image symmetry check to the project's own tackle rule." />
-          <figcaption>
-            two more of the six worked cases in the full report: a hedge
-            shallow enough (97.5% / 2.5%) that rounding it to &ldquo;pure&rdquo;
-            would misread the game, and this state&apos;s exact mirror image
-            &mdash; board flipped, value negated to 17 decimal places.
-          </figcaption>
         </figure>
       </div>
     </section>
