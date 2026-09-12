@@ -23,6 +23,7 @@ FIGURES = [
     "kickoff.png",
     "showcase.png",
     "positions_web.png",
+    "positions_web_matrix.png",
     "mechanism.png",
     "rps_vs_soccer.png",
     "rule_fingerprints.png",

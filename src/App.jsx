@@ -174,10 +174,10 @@ function Positions() {
           over another &mdash; the matrix itself, not a summary statistic like
           entropy. Reading each card below: the board position (blue = player
           0, green = player 1, the orange dot is the ball, arrow thickness =
-          move probability), and the stage game as a node-and-arrow graph
-          &mdash; a lit node is a stable outcome, a closed loop of arrows means
-          no cell is safe. Four representative cases, read directly off the
-          exact solver:
+          move probability), and its full <span className="mono">4&times;4</span>{' '}
+          Q matrix, drawn as a node-and-arrow graph &mdash; a lit node is a
+          stable outcome, a closed loop of arrows means no cell is safe. Five
+          representative cases, read directly off the exact solver:
         </p>
 
         <div className="case-grid">
@@ -195,9 +195,10 @@ function Positions() {
             Support <span className="mono">U 43.3% / L 54.7% / R 1.9%</span>{' '}
             for the carrier, six cells from goal &mdash; as far as this board
             allows. Entropy (1.11 bits) is the richest on this page, but the
-            real content is the matrix: three rows are simultaneously
-            undominated because the defender is close enough to threaten all
-            three, so no single row is safely better than the others.
+            real content is the <span className="mono">4&times;4</span> matrix
+            itself: three rows are simultaneously undominated because the
+            defender is close enough to threaten all three, so no single row
+            is safely better than the others.
           </CaseCard>
           <CaseCard tag="L/R indifference" state="(1, 1, 1, 0, 1)" title="&ldquo;An equal chance of winning either way&rdquo;">
             The carrier&apos;s entire live option set is{' '}
@@ -206,7 +207,19 @@ function Positions() {
             expected outcome against the defender&apos;s own mix, so there is
             no honest reason to prefer one. This is the rarer shape: only 4 of
             94 mixed states cross a purely horizontal pair instead of a
-            vertical one.
+            vertical one. Its full <span className="mono">4&times;4</span> Q
+            matrix is below &mdash; U and D are printed too, to show exactly
+            why they lose out, not left off.
+          </CaseCard>
+          <CaseCard tag="Asymmetric mix" state="(0, 2, 1, 2, 0)" title="Only one player is actually guessing">
+            The odd one out. The carrier still mixes two actions
+            (<span className="mono">U 2.6% / D 97.4%</span>) but the{' '}
+            <strong>defender</strong>&apos;s equilibrium is a single fixed move
+            (<span className="mono">R</span>, 100%). Against that fixed R, U
+            and D are exactly tied in payoff &mdash; a tie, not a best-reply
+            cycle, can look identical to a forced mix in the printed policy,
+            but it is a different phenomenon: either pure U or pure D alone
+            would also have been a valid equilibrium here.
           </CaseCard>
           <CaseCard tag="The surprising case" state="(4, 4, 5, 4, 0), deterministic" title="Zero transition randomness &mdash; still forced to mix">
             Every other case here owes its mix to the coin flip in who wins a
@@ -222,11 +235,22 @@ function Positions() {
         </div>
 
         <figure className="figure-frame wide">
-          <img src={`${BASE}figures/positions_web.png`} alt="Four boards, one per case above: blue and green discs are the two players, the orange dot is the ball, and arrows show each player's move probabilities." />
+          <img src={`${BASE}figures/positions_web.png`} alt="Five boards, one per case above: blue and green discs are the two players, the orange dot is the ball, and arrows show each player's move probabilities." />
           <figcaption>
-            the four cases above, drawn: blue = player 0, green = player 1,
+            the five cases above, drawn: blue = player 0, green = player 1,
             the orange dot is the ball, arrow thickness = probability of that
             move.
+          </figcaption>
+        </figure>
+
+        <figure className="figure-frame wide">
+          <img src={`${BASE}figures/positions_web_matrix.png`} alt="The full 4x4 Q matrix for each of the five cases, drawn as a node-and-arrow graph -- blue arrows show the carrier's reason to switch rows, green arrows the defender's reason to switch columns." />
+          <figcaption>
+            and the full <span className="mono">4&times;4</span> Q matrix
+            behind each one, as a node-and-arrow graph: blue arrows point
+            toward the carrier&apos;s better row, green toward the
+            defender&apos;s better column. A closed loop means no cell is
+            stable &mdash; every case here, cell by cell.
           </figcaption>
         </figure>
 
@@ -241,20 +265,22 @@ function Positions() {
             from two sides, not two different stories: a mixed equilibrium is
             exactly the strategy pair where every action in the support earns
             the same expected payoff against the opponent&apos;s mix. That
-            equality is why the graphs above cycle with no resting point.
+            equality is why the graphs above cycle with no resting point &mdash;
+            except in the asymmetric case, where it&apos;s a tie, not a cycle,
+            doing the work.
           </p>
         </div>
 
         <p>
-          Three more cases live in the full write-up: the exact <em>mirror</em>{' '}
-          of the two-action case (value negated to 17 decimal places), a hedge
-          so shallow (97.5% / 2.5%) that rounding it to &ldquo;pure&rdquo;
-          would misread the game, and this project&apos;s own tackle rule
-          producing the same duel by a completely different mechanism &mdash;
-          each with its board, its node-and-arrow graph, and its exact
-          4&times;4 matrix.{' '}
+          Four more cases live in the full write-up: a pure state for
+          contrast, the exact <em>mirror</em> of the two-action case (value
+          negated to 17 decimal places), a hedge so shallow (97.5% / 2.5%)
+          that rounding it to &ldquo;pure&rdquo; would misread the game, and
+          this project&apos;s own tackle rule producing the same duel by a
+          completely different mechanism &mdash; each with its board, its
+          node-and-arrow graph, and its exact 4&times;4 Q matrix.{' '}
           <a href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/positions.pdf">
-            All seven cases, as a PDF &rarr;
+            All eight cases, as a PDF &rarr;
           </a>
         </p>
 
