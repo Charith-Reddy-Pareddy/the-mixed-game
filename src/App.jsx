@@ -275,18 +275,23 @@ function Positions() {
         </div>
 
         <p>
-          Five more cases live in the full write-up: a pure state for
+          Seven more cases live in the full write-up: a pure state for
           contrast, a clean L/R-indifference example (support exactly
           {' '}<span className="mono">{'{L, R}'}</span>, matching the quote
           above word for word), the exact <em>mirror</em> of the two-action
           case (value negated to 17 decimal places), a hedge so shallow
           (97.5% / 2.5%) that rounding it to &ldquo;pure&rdquo; would
-          misread the game, and this project&apos;s own tackle rule
-          producing the same duel by a completely different mechanism
+          misread the game, this project&apos;s own tackle rule producing
+          the same duel by a completely different mechanism, the fourth and
+          last canonical support shape (the carrier needs three live
+          actions, the defender only two &mdash; the single deepest gap of
+          any case), and a single-cell goal that is <em>always</em> pure
+          under every move-order rule in the project, forced to mix anyway
+          by adding a small chance of any player slipping to a random move
           &mdash; each with its board, its node-and-arrow graph, and its
           exact 4&times;4 Q matrix.{' '}
           <a href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/positions.pdf">
-            All nine cases, as a PDF &rarr;
+            All twelve cases, as a PDF &rarr;
           </a>
         </p>
 
