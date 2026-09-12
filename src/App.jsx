@@ -191,6 +191,17 @@ function Positions() {
             equilibrium condition. 90 of the 94 mixed states on this board
             share this exact shape, a vertical lane choice.
           </CaseCard>
+          <CaseCard tag="The professor's position" state="(0, 0, 1, 1, 0)" title="Players at (0,0) and (1,1) &mdash; his own sketch">
+            This is the board position drawn at the meeting, coordinate for
+            coordinate: the carrier pinned in the back corner{' '}
+            <span className="mono">(0, 0)</span>, the defender diagonally
+            adjacent at <span className="mono">(1, 1)</span>. Pinned in the
+            corner, the carrier&apos;s two live escapes are straight up the
+            sideline or across the back line (<span className="mono">
+            U 4.6% / L 95.4%</span>); the defender guesses between them
+            (<span className="mono">D 94.9% / L 5.1%</span>). Lopsided, but
+            genuinely mixed &mdash; the corner leaves little room, not zero.
+          </CaseCard>
           <CaseCard tag="Three-action mix" state="(0, 0, 2, 0, 0)" title="Not a two-way guess at all">
             Support <span className="mono">U 43.3% / L 54.7% / R 1.9%</span>{' '}
             for the carrier, six cells from goal &mdash; as far as this board
@@ -199,17 +210,6 @@ function Positions() {
             itself: three rows are simultaneously undominated because the
             defender is close enough to threaten all three, so no single row
             is safely better than the others.
-          </CaseCard>
-          <CaseCard tag="L/R indifference" state="(1, 1, 1, 0, 1)" title="&ldquo;An equal chance of winning either way&rdquo;">
-            The carrier&apos;s entire live option set is{' '}
-            <span className="mono">L</span> and <span className="mono">R</span>{' '}
-            &mdash; no vertical move survives at all. Both give the same
-            expected outcome against the defender&apos;s own mix, so there is
-            no honest reason to prefer one. This is the rarer shape: only 4 of
-            94 mixed states cross a purely horizontal pair instead of a
-            vertical one. Its full <span className="mono">4&times;4</span> Q
-            matrix is below &mdash; U and D are printed too, to show exactly
-            why they lose out, not left off.
           </CaseCard>
           <CaseCard tag="Asymmetric mix" state="(0, 2, 1, 2, 0)" title="Only one player is actually guessing">
             The odd one out. The carrier still mixes two actions
@@ -261,26 +261,32 @@ function Positions() {
             between the two.&rdquo;
           </p>
           <p className="callout-body">
-            A best-reply cycle and mutual indifference are the same fact seen
-            from two sides, not two different stories: a mixed equilibrium is
-            exactly the strategy pair where every action in the support earns
-            the same expected payoff against the opponent&apos;s mix. That
-            equality is why the graphs above cycle with no resting point &mdash;
-            except in the asymmetric case, where it&apos;s a tie, not a cycle,
-            doing the work.
+            The professor&apos;s own position above crosses U/L, not L/R, so
+            the cleanest match to this exact sentence is a different state,
+            (1, 1, 1, 0, 1) &mdash; support exactly <span className="mono">
+            {'{L, R}'}</span>, both actions equally good, no vertical option
+            in sight (full write-up, Case 4). Either way, a best-reply cycle
+            and mutual indifference are the same fact seen from two sides:
+            a mixed equilibrium is exactly the strategy pair where every
+            action in the support earns the same expected payoff against the
+            opponent&apos;s mix &mdash; except in the asymmetric case, where
+            it&apos;s a tie, not a cycle, doing the work.
           </p>
         </div>
 
         <p>
-          Four more cases live in the full write-up: a pure state for
-          contrast, the exact <em>mirror</em> of the two-action case (value
-          negated to 17 decimal places), a hedge so shallow (97.5% / 2.5%)
-          that rounding it to &ldquo;pure&rdquo; would misread the game, and
-          this project&apos;s own tackle rule producing the same duel by a
-          completely different mechanism &mdash; each with its board, its
-          node-and-arrow graph, and its exact 4&times;4 Q matrix.{' '}
+          Five more cases live in the full write-up: a pure state for
+          contrast, a clean L/R-indifference example (support exactly
+          {' '}<span className="mono">{'{L, R}'}</span>, matching the quote
+          above word for word), the exact <em>mirror</em> of the two-action
+          case (value negated to 17 decimal places), a hedge so shallow
+          (97.5% / 2.5%) that rounding it to &ldquo;pure&rdquo; would
+          misread the game, and this project&apos;s own tackle rule
+          producing the same duel by a completely different mechanism
+          &mdash; each with its board, its node-and-arrow graph, and its
+          exact 4&times;4 Q matrix.{' '}
           <a href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/positions.pdf">
-            All eight cases, as a PDF &rarr;
+            All nine cases, as a PDF &rarr;
           </a>
         </p>
 
