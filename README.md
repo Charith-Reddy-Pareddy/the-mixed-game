@@ -1,11 +1,11 @@
-# Soccer × Nash Lab
+# The Mixed Game
 
 An interactive companion site to
 [soccer-markov-nash](https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash) —
 a discrete soccer Markov game, solved exactly, that pins down precisely when a
 Nash equilibrium requires a mixed strategy instead of a deterministic move.
 
-**Live:** <https://charith-reddy-pareddy.github.io/soccer-nash-lab/>
+**Live:** <https://charith-reddy-pareddy.github.io/the-mixed-game/>
 
 This site is deliberately non-technical: plain-language explanations, figures,
 and one live table, aimed at a reader who does not want to read a research

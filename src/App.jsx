@@ -9,11 +9,11 @@ function Nav() {
       <a className="nav-brand" href="#top">
         <span className="nav-dot p0" />
         <span className="nav-dot p1" />
-        Soccer &times; Nash Lab
+        The Mixed Game
       </a>
       <nav className="nav-links">
         <a href="#switch">The switch</a>
-        <a href="#seeing">Positions</a>
+        <a href="#seeing">Four cases</a>
         <a href="#tournament">Tournament</a>
         <a
           className="nav-cta"
@@ -149,6 +149,17 @@ function TheSwitch() {
   )
 }
 
+function CaseCard({ tag, state, title, children }) {
+  return (
+    <div className="case-card">
+      <span className="case-tag">{tag}</span>
+      <h3>{title}</h3>
+      <p className="case-state">state = {state}</p>
+      <p>{children}</p>
+    </div>
+  )
+}
+
 function Positions() {
   return (
     <section className="section" id="seeing">
@@ -156,20 +167,66 @@ function Positions() {
         <Eyebrow n="03">Player positions</Eyebrow>
         <h2>What the players are actually doing, not just where mixing occurs.</h2>
         <p>
-          A heatmap of &ldquo;here be mixed strategies&rdquo; answers the wrong
-          question. What matters is the actual configuration: where the two
-          players are, which moves are genuinely live, and why the payoffs
-          leave a player with no honest reason to prefer one action over
-          another. Three cases, read directly off the exact solver:
+          A heatmap of &ldquo;here be mixed strategies&rdquo; answers the
+          wrong question. What matters is the actual configuration: where the
+          two players are, which moves are genuinely live, and why the
+          payoffs leave a player with no honest reason to prefer one action
+          over another &mdash; the matrix itself, not a summary statistic like
+          entropy. Four representative cases, read directly off the exact
+          solver:
         </p>
         <figure className="figure-frame wide">
           <img src={`${BASE}figures/positions.png`} alt="Three board-and-graph pairs: a pure state with one stable outcome, an indifference case where the carrier only ever chooses between left and right, and a genuine three-action mix." />
           <figcaption>
-            each pair: the board position, and the stage game redrawn as a
-            node-and-arrow graph &mdash; a lit node is a stable outcome, a closed
-            loop of arrows means no cell is safe.
+            each pair: the board position (blue = player 0, green = player 1,
+            the orange dot is the ball, arrow thickness = move probability),
+            and the stage game redrawn as a node-and-arrow graph &mdash; a lit
+            node is a stable outcome, a closed loop of arrows means no cell is
+            safe.
           </figcaption>
         </figure>
+
+        <div className="case-grid">
+          <CaseCard tag="Two-action mix" state="(0, 1, 1, 1, 0)" title="The typical shape: which lane to take">
+            The carrier mixes <span className="mono">U 63.5% / D 36.5%</span>;
+            the defender answers <span className="mono">U 36.5% / R 63.5%</span>.
+            Physically: the carrier is deciding which goal row to attack, and
+            the defender is guessing which one. Mathematically, both actions
+            give the carrier the exact same expected continuation value against
+            the defender&apos;s own mix &mdash; that equality <em>is</em> the
+            equilibrium condition. 90 of the 94 mixed states on this board
+            share this exact shape, a vertical lane choice.
+          </CaseCard>
+          <CaseCard tag="Three-action mix" state="(0, 0, 2, 0, 0)" title="Not a two-way guess at all">
+            Support <span className="mono">U 43.3% / L 54.7% / R 1.9%</span>{' '}
+            for the carrier, six cells from goal &mdash; as far as this board
+            allows. Entropy (1.11 bits) is the richest on this page, but the
+            real content is the matrix: three rows are simultaneously
+            undominated because the defender is close enough to threaten all
+            three, so no single row is safely better than the others.
+          </CaseCard>
+          <CaseCard tag="L/R indifference" state="(1, 1, 1, 0, 1)" title="&ldquo;An equal chance of winning either way&rdquo;">
+            The carrier&apos;s entire live option set is{' '}
+            <span className="mono">L</span> and <span className="mono">R</span>{' '}
+            &mdash; no vertical move survives at all. Both give the same
+            expected outcome against the defender&apos;s own mix, so there is
+            no honest reason to prefer one. This is the rarer shape: only 4 of
+            94 mixed states cross a purely horizontal pair instead of a
+            vertical one.
+          </CaseCard>
+          <CaseCard tag="The surprising case" state="(4, 4, 5, 4, 0), deterministic" title="Zero transition randomness &mdash; still forced to mix">
+            Every other case here owes its mix to the coin flip in who wins a
+            contested cell. Turn that off entirely (fully deterministic
+            movement) and add a reward that pays for field position
+            (<span className="mono">scoring=&quot;territory&quot;</span>) instead
+            of goals alone: the carrier still mixes{' '}
+            <span className="mono">D 53.8% / R 46.2%</span>, near a fair coin
+            (entropy 0.996 bits). The forced guess doesn&apos;t need a
+            stochastic transition at all &mdash; coupling the reward to both
+            players&apos; actions is enough on its own.
+          </CaseCard>
+        </div>
+
         <div className="callout">
           <p className="callout-quote">
             &ldquo;When we move right and when we move left, there&apos;s an
@@ -177,23 +234,21 @@ function Positions() {
             between the two.&rdquo;
           </p>
           <p className="callout-body">
-            State (1, 1, 1, 0, 1) is exactly that case: the carrier&apos;s
-            entire live option set is <span className="mono">L</span> and{' '}
-            <span className="mono">R</span> &mdash; no vertical option survives
-            at all &mdash; and both give the same expected outcome against the
-            defender&apos;s own mix. A best-reply cycle and mutual indifference
-            are the same fact seen from two sides, not two different stories.
+            A best-reply cycle and mutual indifference are the same fact seen
+            from two sides, not two different stories: a mixed equilibrium is
+            exactly the strategy pair where every action in the support earns
+            the same expected payoff against the opponent&apos;s mix. That
+            equality is why the graphs above cycle with no resting point.
           </p>
         </div>
+
         <figure className="figure-frame wide">
           <img src={`${BASE}figures/showcase.png`} alt="Six mixed states drawn as boards with weighted arrows for each player's move probabilities, from a near-even split to a mirror-image symmetry check to the project's own tackle rule." />
           <figcaption>
-            six more cases: a near-even split, a three-way mix as far from
-            goal as the board allows, a hedge shallow enough that rounding it
-            would lie, its exact mirror image, a mix forced by reward alone
-            with zero transition randomness, and the project&apos;s own
-            tackle-collision rule producing the same duel by a different
-            route.
+            two more of the six worked cases in the full report: a hedge
+            shallow enough (97.5% / 2.5%) that rounding it to &ldquo;pure&rdquo;
+            would misread the game, and this state&apos;s exact mirror image
+            &mdash; board flipped, value negated to 17 decimal places.
           </figcaption>
         </figure>
       </div>
@@ -356,7 +411,7 @@ function Footer() {
     <footer className="footer">
       <div className="footer-inner">
         <p className="mono footer-line">
-          Charith Reddy Pareddy &middot; soccer-nash-lab &middot; figures and
+          Charith Reddy Pareddy &middot; the-mixed-game &middot; figures and
           data generated by{' '}
           <a href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash">
             soccer-markov-nash

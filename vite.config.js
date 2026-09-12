@@ -3,7 +3,7 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/soccer-nash-lab/',
+  base: '/the-mixed-game/',
   plugins: [react()],
   build: {
     outDir: 'docs',

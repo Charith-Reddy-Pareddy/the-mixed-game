@@ -1,23 +1,22 @@
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Work+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
-  --ink: #0a0d0c;
-  --ink-raise: #12181a;
-  --ink-raise-2: #171f21;
-  --paper: #eef1ea;
-  --text-soft: #a3b0a8;
-  --text-faint: #66756e;
-  --rule: #202b28;
-  --rule-bright: #2e3c37;
-  --accent: #ffb545;
-  --accent-deep: #cc8a2a;
-  --accent-glow: rgba(255, 181, 69, 0.16);
-  --cool: #3fe8c4;
-  --cool-soft: rgba(63, 232, 196, 0.14);
-  --danger: #ff7361;
-  --p0: #5b9bdb;
-  --p1: #57c07f;
-  --shadow: 0 40px 100px -40px rgba(0, 0, 0, 0.7);
+  --paper: #ffffff;
+  --tint: #f3f5f3;
+  --raise: #fafbfa;
+  --ink: #14181a;
+  --ink-soft: #49525a;
+  --ink-faint: #838d93;
+  --rule: #e4e7e5;
+  --rule-strong: #d2d7d4;
+  --accent: #d6293f;
+  --accent-deep: #ad1f30;
+  --accent-soft: #fbe7ea;
+  --cool: #3141a6;
+  --cool-soft: #eaecf8;
+  --p0: #3457c7;
+  --p1: #3f9d5f;
+  --shadow: 0 40px 90px -40px rgba(20, 24, 26, 0.22);
 }
 
 * {
@@ -25,13 +24,13 @@
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 body {
   margin: 0;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--paper);
+  color: var(--ink);
   font-family: 'Work Sans', system-ui, sans-serif;
   font-size: 16px;
   line-height: 1.6;
@@ -58,16 +57,15 @@ code, .mono, .data, table {
 p {
   margin: 0 0 1.1rem;
   max-width: 62ch;
-  color: var(--text-soft);
+  color: var(--ink-soft);
 }
 
 a {
   color: var(--cool);
-  text-decoration-color: rgba(63, 232, 196, 0.4);
 }
 
 a:hover {
-  text-decoration-color: var(--cool);
+  color: var(--accent-deep);
 }
 
 img {
@@ -76,6 +74,6 @@ img {
 }
 
 ::selection {
-  background: var(--accent-glow);
-  color: var(--paper);
+  background: var(--accent-soft);
+  color: var(--ink);
 }
