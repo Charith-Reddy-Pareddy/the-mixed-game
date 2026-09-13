@@ -37,8 +37,11 @@ npm run dev
 ## Building / deploying
 
 ```bash
-npm run build   # writes docs/ (the GitHub Pages source for this repo)
+npm run build && touch docs/.nojekyll
 git add docs && git commit -m "Rebuild site" && git push
 ```
 
-GitHub Pages is configured to serve from `main` / `docs`.
+GitHub Pages is configured to serve from `main` / `docs`. **`npm run build`
+empties `docs/` first** (Vite's default `emptyOutDir`), which silently
+deletes `docs/.nojekyll` along with the old JS chunk -- always `touch` it
+back after building, or Pages may try to run the output through Jekyll.
