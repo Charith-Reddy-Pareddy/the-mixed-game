@@ -176,8 +176,9 @@ function Positions() {
           0, green = player 1, the orange dot is the ball, arrow thickness =
           move probability), and its full <span className="mono">4&times;4</span>{' '}
           Q matrix, drawn as a node-and-arrow graph &mdash; a lit node is a
-          stable outcome, a closed loop of arrows means no cell is safe. Five
-          representative cases, read directly off the exact solver:
+          stable outcome, a closed best-response cycle means no pure action
+          pair is stable. Five representative cases, read directly off the
+          exact solver:
         </p>
 
         <div className="case-grid">
@@ -212,14 +213,16 @@ function Positions() {
             is safely better than the others.
           </CaseCard>
           <CaseCard tag="Asymmetric mix" state="(0, 2, 1, 2, 0)" title="Only one player is actually guessing">
-            The odd one out. The carrier still mixes two actions
-            (<span className="mono">U 2.6% / D 97.4%</span>) but the{' '}
+            The case worth discussing most. The carrier still mixes two
+            actions (<span className="mono">U 2.6% / D 97.4%</span>) but the{' '}
             <strong>defender</strong>&apos;s equilibrium is a single fixed move
             (<span className="mono">R</span>, 100%). Against that fixed R, U
             and D are exactly tied in payoff &mdash; a tie, not a best-reply
             cycle, can look identical to a forced mix in the printed policy,
             but it is a different phenomenon: either pure U or pure D alone
-            would also have been a valid equilibrium here.
+            would also have been a valid equilibrium here. A fractional LP
+            output is not automatically a strategically required mixed
+            strategy.
           </CaseCard>
           <CaseCard tag="The surprising case" state="(4, 4, 5, 4, 0), deterministic" title="Zero transition randomness &mdash; still forced to mix">
             Every other case here owes its mix to the coin flip in who wins a
@@ -249,8 +252,8 @@ function Positions() {
             and the full <span className="mono">4&times;4</span> Q matrix
             behind each one, as a node-and-arrow graph: blue arrows point
             toward the carrier&apos;s better row, green toward the
-            defender&apos;s better column. A closed loop means no cell is
-            stable &mdash; every case here, cell by cell.
+            defender&apos;s better column. A closed best-response cycle means
+            no pure action pair is stable &mdash; every case here, cell by cell.
           </figcaption>
         </figure>
 
@@ -265,7 +268,7 @@ function Positions() {
             the cleanest match to this exact sentence is a different state,
             (1, 1, 1, 0, 1) &mdash; support exactly <span className="mono">
             {'{L, R}'}</span>, both actions equally good, no vertical option
-            in sight (full write-up, Case 4). Either way, a best-reply cycle
+            in sight (full write-up, Case 3). Either way, a best-reply cycle
             and mutual indifference are the same fact seen from two sides:
             a mixed equilibrium is exactly the strategy pair where every
             action in the support earns the same expected payoff against the
@@ -285,8 +288,8 @@ function Positions() {
           the same duel by a completely different mechanism, the fourth and
           last canonical support shape (the carrier needs three live
           actions, the defender only two &mdash; the single deepest gap of
-          any case), and a single-cell goal that is <em>always</em> pure
-          under every move-order rule in the project, forced to mix anyway
+          any case), and a single-cell goal that is pure across every
+          move-order rule tested in the project, forced to mix anyway
           by adding a small chance of any player slipping to a random move
           &mdash; each with its board, its node-and-arrow graph, and its
           exact 4&times;4 Q matrix.{' '}
