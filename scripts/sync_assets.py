@@ -30,6 +30,7 @@ FIGURES = [
     "generalize.png",
     "tournament4.png",
     "occupancy.png",
+    "templates.png",
 ]
 
 

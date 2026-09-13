@@ -380,6 +380,117 @@ td.lo { color: var(--accent); font-weight: 600; }
   margin-bottom: 1.8rem;
 }
 
+/* ---------------------------------------------------------------- meta / tech links */
+.meta-line {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.03em;
+  color: var(--ink-faint);
+  margin: 0 0 1rem;
+}
+
+.tech-link {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--cool);
+}
+.tech-link:hover { color: var(--accent-deep); }
+
+.subhead {
+  font-size: 1.28rem;
+  margin: 2rem 0 0.9rem;
+  color: var(--ink);
+}
+
+.stat-grid.cols-3 { grid-template-columns: repeat(3, 1fr); margin: 1.4rem 0; }
+@media (max-width: 640px) { .stat-grid.cols-3 { grid-template-columns: 1fr; } }
+
+/* ---------------------------------------------------------------- bar chart (degeneracy split) */
+.bar-chart {
+  margin: 1.4rem 0 1.8rem;
+}
+.bar-track {
+  display: flex;
+  width: 100%;
+  height: 2.2rem;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--rule-strong);
+}
+.bar-segment { display: block; height: 100%; }
+.seg-a { background: var(--cool); }
+.seg-b { background: var(--accent); }
+.seg-c { background: var(--ink-faint); }
+.bar-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem 1.4rem;
+  margin-top: 0.9rem;
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
+.bar-legend-item { display: inline-flex; align-items: center; gap: 0.5rem; }
+.bar-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+/* ---------------------------------------------------------------- neural comparison chart */
+.neural-chart {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.6rem 2rem;
+  background: var(--paper);
+  border: 1px solid var(--rule-strong);
+  border-radius: 14px;
+  padding: 1.5rem 1.6rem 1.2rem;
+  margin: 1.6rem 0 1rem;
+}
+@media (max-width: 720px) { .neural-chart { grid-template-columns: 1fr; } }
+.neural-chart-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin: 0 0 0.9rem;
+}
+.neural-chart-row {
+  display: grid;
+  grid-template-columns: 9.5rem 1fr 3rem;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.82rem;
+}
+.neural-chart-name { color: var(--ink-soft); }
+.neural-chart-bar-track {
+  background: var(--tint);
+  border-radius: 6px;
+  height: 0.6rem;
+  overflow: hidden;
+}
+.neural-chart-bar { display: block; height: 100%; border-radius: 6px; }
+.neural-chart-bar.agree { background: var(--cool); }
+.neural-chart-bar.exploit { background: var(--accent); }
+.neural-chart-val {
+  font-family: 'JetBrains Mono', monospace;
+  text-align: right;
+  color: var(--ink);
+}
+.neural-chart-caption {
+  grid-column: 1 / -1;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  margin: 0.4rem 0 0;
+  line-height: 1.5;
+}
+
 /* ---------------------------------------------------------------- footer */
 .footer {
   padding: 2.4rem clamp(1.2rem, 4vw, 3rem) 3rem;

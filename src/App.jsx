@@ -13,7 +13,7 @@ function Nav() {
       </a>
       <nav className="nav-links">
         <a href="#switch">The switch</a>
-        <a href="#seeing">Four cases</a>
+        <a href="#seeing">Cases</a>
         <a href="#tournament">Tournament</a>
         <a
           className="nav-cta"
@@ -35,10 +35,15 @@ function Hero() {
         <h1 className="hero-title">
           Two players, one ball, and sometimes <em>no safe move</em>.
         </h1>
+        <p className="meta-line">
+          Research project &middot; Fall 2026 &middot; Multi-Agent Reinforcement
+          Learning &middot; Last updated September 2026
+        </p>
         <p className="hero-lede">
-          A discrete soccer Markov game, solved exactly &mdash; no training run,
-          no approximation. Most of the time the best move is obvious. This
-          site is a map of the exact moments it stops being obvious, and why.
+          A discrete soccer Markov game. The core game is solved exactly,
+          giving us ground truth for every later approximation experiment.
+          Most of the time the best move is obvious. This site is a map of
+          the exact moments it stops being obvious, and why.
         </p>
         <div className="hero-actions">
           <a
@@ -99,10 +104,14 @@ function TheGame() {
           unit of advantage one player gains is exactly what the other loses.
         </p>
         <p>
-          That single rule &mdash; simultaneous, opposed choice &mdash; is the
-          entire mechanism behind everything on this page. It is also exactly
-          the mechanism behind poker, pricing wars, and any two systems
-          competing inside the same environment.
+          Simultaneous choice creates the strategic setting, but it is not
+          enough on its own &mdash; the deterministic version of this same game
+          is simultaneous too, and it is pure everywhere. Mixing only becomes
+          necessary when the transition or the reward <em>couples</em> the
+          players&apos; actions, so that each player&apos;s best move depends on
+          the other&apos;s. That coupling is also exactly what shows up in
+          poker, pricing wars, and any two systems competing inside the same
+          environment.
         </p>
       </div>
     </section>
@@ -114,7 +123,10 @@ function TheSwitch() {
     <section className="section band" id="switch">
       <div className="section-inner">
         <Eyebrow n="02">The finding</Eyebrow>
-        <h2>Widen the goal by one cell, and the game stops being predictable.</h2>
+        <h2>
+          Under Littman&apos;s random move order, widening the goal creates
+          states where no pure move is safe.
+        </h2>
         <p>
           Hold everything else fixed and change one number: how many cells
           wide the goal is. With a single defendable cell, a defender can
@@ -129,17 +141,49 @@ function TheSwitch() {
             situations need anything but a fixed, deterministic move &mdash;
             verified by machine, not assumed.
           </StatTile>
-          <StatTile k="goal &ge; 2 cells" value="94" unit="situations">
-            provably require a mixed strategy; 68 of them reduce to the same
-            simple shape &mdash; the carrier picking a lane, the defender
-            guessing it.
+          <StatTile k="7&times;5 board, 3-cell goal" value="94" unit="no-pure-saddle states">
+            provably require a mixed strategy on this board; 68 of them
+            reduce to the same simple shape &mdash; the carrier picking a
+            lane, the defender guessing it.
           </StatTile>
-          <StatTile k="on the path from kickoff" value="41%" unit="of the time">
-            despite being only 4% of all board positions &mdash; the states
-            that need guessing are rare, but they come up constantly in real
-            play, not just as an edge case.
+          <StatTile k="discounted equilibrium-path occupancy" value="41%" unit="">
+            despite representing only about 4% of the state space.
           </StatTile>
         </div>
+        <p>
+          Across the tested Littman-family boards, every one-cell goal
+          produced zero such states, while every tested wider goal produced
+          at least one.
+        </p>
+
+        <figure className="figure-frame wide">
+          <img src={`${BASE}figures/occupancy.png`} alt="Occupancy chart: the 94 no-pure-saddle states carry 41 percent of the discounted equilibrium-path occupancy despite being about 4 percent of the state space." />
+          <figcaption>
+            the no-pure-saddle states aren&apos;t a rare corner case &mdash;
+            under optimal play they carry a disproportionate share of the
+            actual path from kickoff
+          </figcaption>
+        </figure>
+
+        <p>
+          <a className="tech-link" href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/result.md">
+            Technical details: the goal-width switch &rarr;
+          </a>
+        </p>
+
+        <h3 className="subhead">How close must the players be?</h3>
+        <p>
+          Distance to the <em>opponent</em>, not distance to the goal, is
+          what forces a guess. Every one of the 94 no-pure-saddle states has
+          the two players within 2 cells of each other:
+        </p>
+        <div className="stat-grid cols-3">
+          <StatTile k="distance 1" value="40" unit="states" />
+          <StatTile k="distance 2" value="54" unit="states" />
+          <StatTile k="distance &ge; 3" value="0" unit="states" />
+        </div>
+        <p>Mixing is a local interaction phenomenon in the canonical game.</p>
+
         <p>
           The switch survives board size, board shape, and where exactly the
           goal sits. It does <em>not</em> survive a different source of
@@ -149,6 +193,15 @@ function TheSwitch() {
           player controls, sitting exactly where the carrier has two lanes
           and the defender can only cover one.
         </p>
+
+        <figure className="figure-frame wide">
+          <img src={`${BASE}figures/generalize.png`} alt="Generalization chart: the goal-width switch survives board scale, aspect ratio, and goal placement, but breaks under action-independent movement noise." />
+          <figcaption>
+            how far the switch generalizes &mdash; it survives board scale,
+            aspect ratio, and goal placement; it does not survive a change of
+            transition family
+          </figcaption>
+        </figure>
       </div>
     </section>
   )
@@ -194,8 +247,9 @@ function Positions() {
             the defender is guessing which one. Mathematically, both actions
             give the carrier the exact same expected continuation value against
             the defender&apos;s own mix &mdash; that equality <em>is</em> the
-            equilibrium condition. 90 of the 94 mixed states on this board
-            share this exact shape, a vertical lane choice.
+            equilibrium condition. In 90 of the 94 no-pure-saddle states, the
+            matching-pennies core uses a vertical carrier move pair, so the
+            dominant geometric pattern is a choice between goal rows.
           </CaseCard>
           <CaseCard tag="Corner duel" state="(0, 0, 1, 1, 0)" title="Players at (0,0) and (1,1) &mdash; sketched at the meeting">
             This is the board position drawn at the meeting, coordinate for
@@ -230,8 +284,10 @@ function Positions() {
             strategy.
           </CaseCard>
           <CaseCard tag="The surprising case" state="(4, 4, 5, 4, 0), deterministic" title="Zero transition randomness &mdash; still forced to mix">
-            Every other case here owes its mix to the coin flip in who wins a
-            contested cell. Turn that off entirely (fully deterministic
+            The earlier examples owe their strategic uncertainty to
+            Littman&apos;s random move order: the same pair of chosen moves
+            can resolve differently depending on which player moves first.
+            Turn that off entirely (fully deterministic
             movement) and add a reward that pays for field position
             (<span className="mono">scoring=&quot;territory&quot;</span>) instead
             of goals alone: the carrier still mixes{' '}
@@ -306,6 +362,56 @@ function Positions() {
         <figure className="figure-frame wide">
           <img src={`${BASE}figures/showcase.png`} alt="Six mixed states drawn as boards with weighted arrows for each player's move probabilities, from a near-even split to a mirror-image symmetry check to the project's own tackle rule." />
         </figure>
+
+        <h3 className="subhead">Eight patterns explain ninety-four states</h3>
+        <p>
+          Are the 94 no-pure-saddle states actually different situations, or
+          repeated versions of the same one? Canonicalize each state under
+          the board&apos;s mirror symmetry and they collapse to 47 pairs; group
+          those by carrier-frame geometry and they collapse again, to just{' '}
+          <strong>8 canonical templates</strong>. 94 &rarr; 47 mirror pairs
+          &rarr; 8 templates &mdash; a handful of geometric shapes, not
+          ninety-four unrelated puzzles.
+        </p>
+        <figure className="figure-frame wide">
+          <img src={`${BASE}figures/templates.png`} alt="One board per matching-pennies template: carrier and defender each with two probability-weighted arrows, covering the 8 geometric templates the 94 no-pure-saddle states reduce to." />
+          <figcaption>
+            one policy fan per template &mdash; each covers a whole class of
+            mixed states related by carrier-frame geometry: the carrier
+            choosing between two scoring lanes, the defender guessing which
+          </figcaption>
+        </figure>
+        <p>
+          <a className="tech-link" href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/templates.md">
+            Technical details: the 8 templates &rarr;
+          </a>
+        </p>
+
+        <h3 className="subhead">Not every fractional LP policy means the same thing</h3>
+        <p>
+          Some probabilities are forced by the game. Others are just one
+          point on a larger equilibrium set &mdash; the asymmetric case above
+          is one example, where a &ldquo;pure&rdquo; 100% move actually ties
+          exactly with an unweighted alternative. Sorting all 94 no-pure-saddle
+          states this way:
+        </p>
+        <div className="bar-chart" role="img" aria-label="64 of 94 states are a unique forced mix, 16 are a degenerate equilibrium face, 14 have a pure reply tied inside the equilibrium set">
+          <div className="bar-track">
+            <span className="bar-segment seg-a" style={{ width: '68.1%' }} />
+            <span className="bar-segment seg-b" style={{ width: '17.0%' }} />
+            <span className="bar-segment seg-c" style={{ width: '14.9%' }} />
+          </div>
+          <div className="bar-legend">
+            <span className="bar-legend-item"><i className="bar-swatch seg-a" />64 unique forced mix</span>
+            <span className="bar-legend-item"><i className="bar-swatch seg-b" />16 degenerate equilibrium face</span>
+            <span className="bar-legend-item"><i className="bar-swatch seg-c" />14 pure reply tied in the set</span>
+          </div>
+        </div>
+        <p>
+          <a className="tech-link" href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/degeneracy.md">
+            Technical details: forced vs. degenerate &rarr;
+          </a>
+        </p>
       </div>
     </section>
   )
@@ -331,12 +437,24 @@ function Mechanism() {
           <figcaption>the same cycle, twice &mdash; no learning required to see it, just checking every cell once</figcaption>
         </figure>
         <figure className="figure-frame">
-          <img src={`${BASE}figures/rule_fingerprints.png`} alt="Six small boards, one per collision rule, showing where mixed strategies are required." />
+          <img src={`${BASE}figures/mechanism.png`} alt="A mixed stage game's 2 by 2 matching-pennies core drawn as a payoff matrix; each player's best reply flips with the other's choice, the best replies cycle, and no cell is a pure saddle." />
           <figcaption>
-            six different rules for who wins a contested ball, six different
-            fingerprints of where the forced coin flip lands
+            the same cycle, drawn as an actual payoff matrix from the game
+            &mdash; every no-pure-saddle state contains one of these
           </figcaption>
         </figure>
+        <figure className="figure-frame">
+          <img src={`${BASE}figures/rule_fingerprints.png`} alt="Six small boards, one per collision rule, showing where mixed strategies are required." />
+          <figcaption>
+            different transition and reward mechanisms create different
+            spatial fingerprints of strategic mixing
+          </figcaption>
+        </figure>
+        <p>
+          <a className="tech-link" href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/numerics.md">
+            Technical details: numerical robustness &rarr;
+          </a>
+        </p>
       </div>
     </section>
   )
@@ -364,11 +482,11 @@ function Tournament() {
         <Eyebrow n="05">Put to the test</Eyebrow>
         <h2>Knowing when to bluff is the difference between winning and losing.</h2>
         <p>
-          Four policies, each played against an opponent built specifically
-          to find and punish its weakness. <strong>Minimax</strong> is the
-          policy this project solves for &mdash; it mixes exactly where the
-          theory says it must, and stays pure everywhere else. The rest never
-          mix at all.
+          Four policies are tested against several opponents, from weak
+          baselines to a challenger specifically constructed to exploit each
+          policy. <strong>Minimax</strong> is the policy this project solves
+          for &mdash; it mixes exactly where the theory says it must, and
+          stays pure everywhere else. The rest never mix at all.
         </p>
         <div className="table-frame">
           <table>
@@ -415,6 +533,74 @@ function Tournament() {
         <figure className="figure-frame wide">
           <img src={`${BASE}figures/tournament4.png`} alt="Bar chart of the tournament: minimax exploits weak opponents and survives its challenger, greedy and hand-built policies collapse against a tailored challenger." />
         </figure>
+        <p>
+          <a className="tech-link" href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/tournament_deepdive.md">
+            Technical details: the causal deep-dive &rarr;
+          </a>
+        </p>
+      </div>
+    </section>
+  )
+}
+
+const NEURAL_ROWS = [
+  { label: 'exact solver', agree: 100, exploit: 0 },
+  { label: 'Q-network (best of three)', agree: 59, exploit: 0.36 },
+  { label: 'policy network', agree: 96, exploit: 1.20 },
+]
+const NEURAL_MAX_EXPLOIT = 1.3
+
+function NeuralChart() {
+  return (
+    <div className="neural-chart">
+      <div className="neural-chart-col">
+        <p className="neural-chart-label">action agreement (higher = more correct moves named)</p>
+        {NEURAL_ROWS.map((r) => (
+          <div className="neural-chart-row" key={`a-${r.label}`}>
+            <span className="neural-chart-name">{r.label}</span>
+            <span className="neural-chart-bar-track">
+              <span className="neural-chart-bar agree" style={{ width: `${r.agree}%` }} />
+            </span>
+            <span className="neural-chart-val">{r.agree}%</span>
+          </div>
+        ))}
+      </div>
+      <div className="neural-chart-col">
+        <p className="neural-chart-label">exploitability &mdash; duality gap (lower = harder to beat)</p>
+        {NEURAL_ROWS.map((r) => (
+          <div className="neural-chart-row" key={`e-${r.label}`}>
+            <span className="neural-chart-name">{r.label}</span>
+            <span className="neural-chart-bar-track">
+              <span className="neural-chart-bar exploit" style={{ width: `${(r.exploit / NEURAL_MAX_EXPLOIT) * 100}%` }} />
+            </span>
+            <span className="neural-chart-val">{r.exploit.toFixed(2)}</span>
+          </div>
+        ))}
+      </div>
+      <p className="neural-chart-caption">
+        the policy network names the right action almost as often as it
+        possibly could, yet is by far the easiest of the three to exploit
+        &mdash; high classification accuracy is not the same as strategic
+        robustness (random-move-order game, <span className="mono">nash_dqn_random_seeds.csv</span>)
+      </p>
+    </div>
+  )
+}
+
+function Contribution() {
+  return (
+    <section className="section" id="contribution">
+      <div className="section-inner">
+        <Eyebrow n="07">My work on this project</Eyebrow>
+        <h2>What I built and evaluated.</h2>
+        <p>
+          I implemented and evaluated the pure-first Nash-Q solver, designed
+          and tested transition and reward variants, developed numerical
+          certificates for pure/mixed classification, analyzed the geometry
+          of mixed states, reproduced the Littman benchmark, evaluated
+          exploitability, and built neural approximations against the exact
+          solution.
+        </p>
       </div>
     </section>
   )
@@ -453,6 +639,12 @@ function WhyItMatters() {
           falls into whenever it is trained to imitate a &ldquo;correct&rdquo;
           move instead of an equilibrium.
         </p>
+        <NeuralChart />
+        <p>
+          <a className="tech-link" href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/report.pdf">
+            Technical details: neural Nash-Q (report &sect;8) &rarr;
+          </a>
+        </p>
         <div className="hero-actions">
           <a
             className="btn btn-primary"
@@ -484,7 +676,8 @@ function Footer() {
           </a>
         </p>
         <p className="mono footer-line footer-faint">
-          solved exactly &mdash; nothing on this page was learned by a neural network
+          Core game-theoretic results are generated by the exact solver;
+          neural experiments are evaluated against that ground truth.
         </p>
       </div>
     </footer>
@@ -502,6 +695,7 @@ export default function App() {
       <Mechanism />
       <Tournament />
       <WhyItMatters />
+      <Contribution />
       <Footer />
     </>
   )
