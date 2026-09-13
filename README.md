@@ -7,10 +7,15 @@ Nash equilibrium requires a mixed strategy instead of a deterministic move.
 
 **Live:** <https://charith-reddy-pareddy.github.io/the-mixed-game/>
 
-This site is deliberately non-technical: plain-language explanations, figures,
-and one live table, aimed at a reader who does not want to read a research
-paper. The full technical report, proofs, and every experiment live in the
-research repo linked above.
+Two documents, by design: this site is deliberately non-technical --
+plain-language explanations, figures, and one live table, aimed at a reader
+who does not want to read a research paper -- while the research repo linked
+above is the technical notebook: every proof, every experiment, reproducible
+from its own code. Neither is a stub of the other, and content flows one way
+only: `scripts/sync_assets.py` pulls this site's figures and live tournament
+table straight from the research repo's own `docs/figures/png/` and
+`experiments/*.csv`, so nothing here is a hand-copied number that can drift
+from the solver's output.
 
 ## Stack
 
