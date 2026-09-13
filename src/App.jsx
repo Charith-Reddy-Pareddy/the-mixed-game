@@ -134,6 +134,11 @@ function TheSwitch() {
             simple shape &mdash; the carrier picking a lane, the defender
             guessing it.
           </StatTile>
+          <StatTile k="on the path from kickoff" value="41%" unit="of the time">
+            despite being only 4% of all board positions &mdash; the states
+            that need guessing are rare, but they come up constantly in real
+            play, not just as an edge case.
+          </StatTile>
         </div>
         <p>
           The switch survives board size, board shape, and where exactly the
@@ -436,6 +441,17 @@ function WhyItMatters() {
           regime a given situation is in &mdash; instead of an expensive
           general solver everywhere, or a policy that is confidently
           deterministic in exactly the spots where that confidence loses.
+        </p>
+        <p>
+          One more lesson, from trying to get a neural network to learn this
+          instead of solving it exactly: a network that names the right move
+          almost every time &mdash; 96&ndash;99% of states, depending on the
+          setup &mdash; can still be more exploitable than one that gets the
+          move wrong more often but hedges correctly where it counts.
+          <strong> Naming the right action is not the same as playing
+          unpredictably</strong> &mdash; the same trap plain single-agent RL
+          falls into whenever it is trained to imitate a &ldquo;correct&rdquo;
+          move instead of an equilibrium.
         </p>
         <div className="hero-actions">
           <a
