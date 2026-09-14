@@ -142,9 +142,9 @@ function MainFinding() {
             verified by machine, not assumed.
           </StatTile>
           <StatTile k="7&times;5 board, 3-cell goal" value="94" unit="no-pure-saddle states">
-            provably require a mixed strategy on this board; 68 of them
-            reduce to the same simple shape &mdash; the carrier picking a
-            lane, the defender guessing it.
+            have no pure saddle on this board &mdash; no deterministic move is
+            safe. Of those, 64 have a uniquely forced mix; the rest are
+            degenerate LP outputs (below).
           </StatTile>
         </div>
         <p>
@@ -400,8 +400,8 @@ function Mechanism() {
           other does? If yes, that move is the obvious answer. If{' '}
           <em>every</em> move can be beaten by some response, the best replies
           chase each other in a loop &mdash; the exact shape of
-          rock&ndash;paper&ndash;scissors &mdash; and the only sane move inside a loop
-          is to randomize.
+          rock&ndash;paper&ndash;scissors &mdash; and the equilibrium must randomize
+          over the actions in that loop.
         </p>
         <figure className="figure-frame">
           <img src={`${BASE}figures/rps_vs_soccer.png`} alt="Rock-paper-scissors next to a real soccer stage game, both showing best replies that cycle with no stable cell." />
@@ -657,9 +657,12 @@ function NeuralLesson() {
         <p>
           One more lesson, from trying to get a neural network to learn this
           instead of solving it exactly: a network that names the right move
-          almost every time &mdash; 96&ndash;99% of states, depending on the
-          setup &mdash; can still be more exploitable than one that gets the
-          move wrong more often but hedges correctly where it counts.
+          almost every time can still be more exploitable than one that gets
+          the move wrong more often but hedges correctly where it counts. On
+          the harder random-order game below, <strong>the policy network
+          reaches 96% action agreement, while the Q-network reaches only
+          about 59%</strong> &mdash; yet the policy network is the more
+          exploitable of the two.
           <strong> Naming the right action is not the same as playing
           unpredictably</strong> &mdash; the same trap plain single-agent RL
           falls into whenever it is trained to imitate a &ldquo;correct&rdquo;
