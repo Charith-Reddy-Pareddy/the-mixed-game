@@ -401,7 +401,7 @@ function Mechanism() {
           <em>every</em> move can be beaten by some response, the best replies
           chase each other in a loop &mdash; the exact shape of
           rock&ndash;paper&ndash;scissors &mdash; and the equilibrium must randomize
-          over the actions in that loop.
+          over the actions in the support.
         </p>
         <figure className="figure-frame">
           <img src={`${BASE}figures/rps_vs_soccer.png`} alt="Rock-paper-scissors next to a real soccer stage game, both showing best replies that cycle with no stable cell." />
