@@ -118,7 +118,7 @@ function TheGame() {
   )
 }
 
-function TheSwitch() {
+function MainFinding() {
   return (
     <section className="section band" id="switch">
       <div className="section-inner">
@@ -146,29 +146,11 @@ function TheSwitch() {
             reduce to the same simple shape &mdash; the carrier picking a
             lane, the defender guessing it.
           </StatTile>
-          <StatTile k="discounted equilibrium-path occupancy" value="41%" unit="">
-            despite representing only about 4% of the state space.
-          </StatTile>
         </div>
         <p>
           Across the tested Littman-family boards, every one-cell goal
           produced zero such states, while every tested wider goal produced
           at least one.
-        </p>
-
-        <figure className="figure-frame wide">
-          <img src={`${BASE}figures/occupancy.png`} alt="Occupancy chart: the 94 no-pure-saddle states carry 41 percent of the discounted equilibrium-path occupancy despite being about 4 percent of the state space." />
-          <figcaption>
-            the no-pure-saddle states aren&apos;t a rare corner case &mdash;
-            under optimal play they carry a disproportionate share of the
-            actual path from kickoff
-          </figcaption>
-        </figure>
-
-        <p>
-          <a className="tech-link" href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/result.md">
-            Technical details: the goal-width switch &rarr;
-          </a>
         </p>
 
         <h3 className="subhead">How close must the players be?</h3>
@@ -202,6 +184,12 @@ function TheSwitch() {
             transition family
           </figcaption>
         </figure>
+
+        <p>
+          <a className="tech-link" href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/result.md">
+            Technical details: the goal-width switch &rarr;
+          </a>
+        </p>
       </div>
     </section>
   )
@@ -362,8 +350,17 @@ function Positions() {
         <figure className="figure-frame wide">
           <img src={`${BASE}figures/showcase.png`} alt="Six mixed states drawn as boards with weighted arrows for each player's move probabilities, from a near-even split to a mirror-image symmetry check to the project's own tackle rule." />
         </figure>
+      </div>
+    </section>
+  )
+}
 
-        <h3 className="subhead">Eight patterns explain ninety-four states</h3>
+function Templates() {
+  return (
+    <section className="section band" id="templates">
+      <div className="section-inner">
+        <Eyebrow n="04">The geometry</Eyebrow>
+        <h2>Eight patterns explain ninety-four states.</h2>
         <p>
           Are the 94 no-pure-saddle states actually different situations, or
           repeated versions of the same one? Canonicalize each state under
@@ -386,32 +383,6 @@ function Positions() {
             Technical details: the 8 templates &rarr;
           </a>
         </p>
-
-        <h3 className="subhead">Not every fractional LP policy means the same thing</h3>
-        <p>
-          Some probabilities are forced by the game. Others are just one
-          point on a larger equilibrium set &mdash; the asymmetric case above
-          is one example, where a &ldquo;pure&rdquo; 100% move actually ties
-          exactly with an unweighted alternative. Sorting all 94 no-pure-saddle
-          states this way:
-        </p>
-        <div className="bar-chart" role="img" aria-label="64 of 94 states are a unique forced mix, 16 are a degenerate equilibrium face, 14 have a pure reply tied inside the equilibrium set">
-          <div className="bar-track">
-            <span className="bar-segment seg-a" style={{ width: '68.1%' }} />
-            <span className="bar-segment seg-b" style={{ width: '17.0%' }} />
-            <span className="bar-segment seg-c" style={{ width: '14.9%' }} />
-          </div>
-          <div className="bar-legend">
-            <span className="bar-legend-item"><i className="bar-swatch seg-a" />64 unique forced mix</span>
-            <span className="bar-legend-item"><i className="bar-swatch seg-b" />16 degenerate equilibrium face</span>
-            <span className="bar-legend-item"><i className="bar-swatch seg-c" />14 pure reply tied in the set</span>
-          </div>
-        </div>
-        <p>
-          <a className="tech-link" href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/degeneracy.md">
-            Technical details: forced vs. degenerate &rarr;
-          </a>
-        </p>
       </div>
     </section>
   )
@@ -419,9 +390,9 @@ function Positions() {
 
 function Mechanism() {
   return (
-    <section className="section band" id="mechanism">
+    <section className="section" id="mechanism">
       <div className="section-inner">
-        <Eyebrow n="04">Why it happens</Eyebrow>
+        <Eyebrow n="05">Why it happens</Eyebrow>
         <h2>No cell is a stable outcome &mdash; the check needs no solver at all.</h2>
         <p>
           Look at one matchup at a time. Does either player have a single
@@ -460,7 +431,45 @@ function Mechanism() {
   )
 }
 
-function Tournament() {
+function Occupancy() {
+  return (
+    <section className="section band" id="occupancy">
+      <div className="section-inner">
+        <Eyebrow n="06">On the equilibrium path</Eyebrow>
+        <h2>Rare globally, common in play.</h2>
+        <p>
+          The 94 no-pure-saddle states are a small corner of the board &mdash;
+          but under optimal play from both sides, the game visits that
+          corner far more often than its size would suggest.
+        </p>
+        <div className="stat-grid">
+          <StatTile k="of the state space" value="4%" unit="">
+            the no-pure-saddle states, as a share of every reachable
+            situation on the board.
+          </StatTile>
+          <StatTile k="discounted equilibrium-path occupancy" value="41%" unit="">
+            despite representing only about 4% of the state space.
+          </StatTile>
+        </div>
+        <figure className="figure-frame wide">
+          <img src={`${BASE}figures/occupancy.png`} alt="Occupancy chart: the 94 no-pure-saddle states carry 41 percent of the discounted equilibrium-path occupancy despite being about 4 percent of the state space." />
+          <figcaption>
+            the no-pure-saddle states aren&apos;t a rare corner case &mdash;
+            under optimal play they carry a disproportionate share of the
+            actual path from kickoff
+          </figcaption>
+        </figure>
+        <p>
+          <a className="tech-link" href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/occupancy.md">
+            Technical details: occupancy on the equilibrium path &rarr;
+          </a>
+        </p>
+      </div>
+    </section>
+  )
+}
+
+function WhyItMatters() {
   const [rows, setRows] = useState(null)
   useEffect(() => {
     fetch(`${BASE}data/tournament4.json`)
@@ -479,8 +488,25 @@ function Tournament() {
   return (
     <section className="section" id="tournament">
       <div className="section-inner">
-        <Eyebrow n="05">Put to the test</Eyebrow>
+        <Eyebrow n="07">Why it matters</Eyebrow>
         <h2>Knowing when to bluff is the difference between winning and losing.</h2>
+        <p className="lede-lg">
+          Strip away the ball and the grid, and this is the question
+          underneath every setting where two or more decision-makers with
+          opposing goals act in the same environment: poker agents,
+          adversarial robustness, pricing bots, multi-robot coordination.
+          Being predictable is a liability the moment someone is watching
+          closely enough to exploit it &mdash; but paying the cost of
+          &ldquo;always consider randomizing&rdquo; everywhere is wasteful,
+          because most situations really do have a clean, obvious answer.
+        </p>
+        <p>
+          This project&apos;s contribution is a cheap, exact way to tell which
+          regime a given situation is in &mdash; instead of an expensive
+          general solver everywhere, or a policy that is confidently
+          deterministic in exactly the spots where that confidence loses.
+          The tournament below is that lesson made concrete.
+        </p>
         <p>
           Four policies are tested against several opponents, from weak
           baselines to a challenger specifically constructed to exploit each
@@ -543,6 +569,41 @@ function Tournament() {
   )
 }
 
+function Degeneracy() {
+  return (
+    <section className="section band" id="degeneracy">
+      <div className="section-inner">
+        <Eyebrow n="08">Reading the LP output</Eyebrow>
+        <h2>What the LP output actually means.</h2>
+        <p>
+          Some probabilities are forced by the game. Others are just one
+          point on a larger equilibrium set &mdash; the asymmetric case
+          earlier is one example, where a &ldquo;pure&rdquo; 100% move
+          actually ties exactly with an unweighted alternative. Sorting all
+          94 no-pure-saddle states this way:
+        </p>
+        <div className="bar-chart" role="img" aria-label="64 of 94 states are a unique forced mix, 16 are a degenerate equilibrium face, 14 have a pure reply tied inside the equilibrium set">
+          <div className="bar-track">
+            <span className="bar-segment seg-a" style={{ width: '68.1%' }} />
+            <span className="bar-segment seg-b" style={{ width: '17.0%' }} />
+            <span className="bar-segment seg-c" style={{ width: '14.9%' }} />
+          </div>
+          <div className="bar-legend">
+            <span className="bar-legend-item"><i className="bar-swatch seg-a" />64 unique forced mix</span>
+            <span className="bar-legend-item"><i className="bar-swatch seg-b" />16 degenerate equilibrium face</span>
+            <span className="bar-legend-item"><i className="bar-swatch seg-c" />14 pure reply tied in the set</span>
+          </div>
+        </div>
+        <p>
+          <a className="tech-link" href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/degeneracy.md">
+            Technical details: forced vs. degenerate &rarr;
+          </a>
+        </p>
+      </div>
+    </section>
+  )
+}
+
 const NEURAL_ROWS = [
   { label: 'exact solver', agree: 100, exploit: 0 },
   { label: 'Q-network (best of three)', agree: 59, exploit: 0.36 },
@@ -587,47 +648,12 @@ function NeuralChart() {
   )
 }
 
-function Contribution() {
+function NeuralLesson() {
   return (
-    <section className="section" id="contribution">
+    <section className="section" id="neural">
       <div className="section-inner">
-        <Eyebrow n="07">My work on this project</Eyebrow>
-        <h2>What I built and evaluated.</h2>
-        <p>
-          I implemented and evaluated the pure-first Nash-Q solver, designed
-          and tested transition and reward variants, developed numerical
-          certificates for pure/mixed classification, analyzed the geometry
-          of mixed states, reproduced the Littman benchmark, evaluated
-          exploitability, and built neural approximations against the exact
-          solution.
-        </p>
-      </div>
-    </section>
-  )
-}
-
-function WhyItMatters() {
-  return (
-    <section className="section closing" id="why">
-      <div className="section-inner">
-        <Eyebrow n="06">Why it matters</Eyebrow>
-        <h2>A small game, a question that shows up anywhere agents share a world.</h2>
-        <p className="lede-lg">
-          Strip away the ball and the grid, and this is the question
-          underneath every setting where two or more decision-makers with
-          opposing goals act in the same environment: poker agents,
-          adversarial robustness, pricing bots, multi-robot coordination.
-          Being predictable is a liability the moment someone is watching
-          closely enough to exploit it &mdash; but paying the cost of
-          &ldquo;always consider randomizing&rdquo; everywhere is wasteful,
-          because most situations really do have a clean, obvious answer.
-        </p>
-        <p>
-          This project&apos;s contribution is a cheap, exact way to tell which
-          regime a given situation is in &mdash; instead of an expensive
-          general solver everywhere, or a policy that is confidently
-          deterministic in exactly the spots where that confidence loses.
-        </p>
+        <Eyebrow n="09">The neural approximation lesson</Eyebrow>
+        <h2>Action accuracy is not equilibrium accuracy.</h2>
         <p>
           One more lesson, from trying to get a neural network to learn this
           instead of solving it exactly: a network that names the right move
@@ -645,6 +671,137 @@ function WhyItMatters() {
             Technical details: neural Nash-Q (report &sect;8) &rarr;
           </a>
         </p>
+      </div>
+    </section>
+  )
+}
+
+const TIMELINE = [
+  {
+    date: '2026-09-06',
+    text: 'Environment, exact stage-game solvers, and Nash Q-iteration built; A10 deliverables completed — successor states, a best-response solver, and a bias-free policy network.',
+  },
+  {
+    date: '2026-09-07',
+    text: 'The pure-first hybrid solver, mirror symmetry, and the goal-width phase diagram; the 94 mixed states reduced to geometric templates; the first neural Nash-Q comparison.',
+  },
+  {
+    date: '2026-09-08',
+    text: 'The one-cell pure-saddle certificate; Littman’s Figure 2 reproduced; the occupancy analysis; the move-order blend sweep.',
+  },
+  {
+    date: '2026-09-09',
+    text: 'Littman’s Table 3 tournament reproduced exactly; the goal-width certificate and the generalization study across board scale, aspect ratio, and movement noise; the project’s own tackle rule.',
+  },
+  {
+    date: '2026-09-11',
+    text: 'Twelve worked representative positions written up as a PDF; this public site launched.',
+  },
+  {
+    date: '2026-09-13',
+    text: 'Neural Nash-Q extended to the genuinely mixed random-order game; a capacity ablation up to 512-wide networks; the 64/16/14 degeneracy split and the distance-1/2 geometry finding; a causal tournament deep-dive; this site corrected and expanded to match.',
+  },
+]
+
+function Timeline() {
+  return (
+    <section className="section band" id="timeline">
+      <div className="section-inner">
+        <Eyebrow n="10">Research updates</Eyebrow>
+        <h2>How the project got here.</h2>
+        <div className="timeline">
+          {TIMELINE.map((t) => (
+            <div className="timeline-row" key={t.date}>
+              <span className="timeline-date mono">{t.date}</span>
+              <span className="timeline-text">{t.text}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+function StatusAndQuestions() {
+  return (
+    <section className="section" id="status">
+      <div className="section-inner">
+        <Eyebrow n="11">Current status</Eyebrow>
+        <h2>Where this stands, and what&apos;s still open.</h2>
+
+        <h3 className="subhead">What&apos;s done</h3>
+        <p>
+          I implemented and evaluated the pure-first Nash-Q solver, designed
+          and tested transition and reward variants, developed numerical
+          certificates for pure/mixed classification, analyzed the geometry
+          of mixed states, reproduced the Littman benchmark, evaluated
+          exploitability, and built neural approximations against the exact
+          solution.
+        </p>
+
+        <h3 className="subhead">Open questions</h3>
+        <ul className="question-list">
+          <li>
+            A board-size-free proof that the single-cell defender&apos;s
+            closed-form strategy is optimal is still missing &mdash; the
+            empirical certificate holds on every tested board, but a general
+            theorem does not exist yet.
+          </li>
+          <li>
+            The mixed states are 4% of the space but 41% of the occupancy
+            &mdash; does a solver that spends LP effort in proportion to
+            occupancy actually beat uniform value iteration, and can it
+            still certify the states it skips?
+          </li>
+          <li>
+            General-sum solving is a sanity check here, not a second research
+            direction &mdash; the zero-sum game is where the geometric story
+            lives.
+          </li>
+          <li>
+            The actual next challenge is a continuous-action version of this
+            game. The discrete work here is what a continuous solver will be
+            checked against, not a component it reuses directly &mdash; that
+            is future work, not something already solved.
+          </li>
+        </ul>
+
+        <p>
+          <a className="tech-link" href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/discussion.md">
+            Technical details: open questions in full &rarr;
+          </a>
+        </p>
+      </div>
+    </section>
+  )
+}
+
+const TECH_LINKS = [
+  ['Full report (PDF)', 'https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/report.pdf'],
+  ['Methods & reproducibility', 'https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/methods.md'],
+  ['The goal-width switch', 'https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/result.md'],
+  ['Eight geometric templates', 'https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/templates.md'],
+  ['Forced vs. degenerate mixes', 'https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/degeneracy.md'],
+  ['Numerical robustness', 'https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/numerics.md'],
+  ['Occupancy on the equilibrium path', 'https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/occupancy.md'],
+  ['Tournament deep-dive', 'https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/tournament_deepdive.md'],
+  ['Twelve worked positions (PDF)', 'https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/positions.pdf'],
+  ['Open questions', 'https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash/blob/main/docs/discussion.md'],
+  ['Source code', 'https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash'],
+  ['The technical documentation site', 'https://charith-reddy-pareddy.github.io/soccer-markov-nash/'],
+]
+
+function TechnicalLinks() {
+  return (
+    <section className="section closing" id="links">
+      <div className="section-inner">
+        <Eyebrow n="12">Go deeper</Eyebrow>
+        <h2>Every claim on this page traces back to code and data.</h2>
+        <div className="links-grid">
+          {TECH_LINKS.map(([label, href]) => (
+            <a key={label} href={href}>{label}</a>
+          ))}
+        </div>
         <div className="hero-actions">
           <a
             className="btn btn-primary"
@@ -654,9 +811,9 @@ function WhyItMatters() {
           </a>
           <a
             className="btn btn-ghost"
-            href="https://charith-reddy-pareddy.github.io/soccer-markov-nash/"
+            href="https://github.com/Charith-Reddy-Pareddy/soccer-markov-nash"
           >
-            The technical documentation site
+            View the source
           </a>
         </div>
       </div>
@@ -690,12 +847,17 @@ export default function App() {
       <Nav />
       <Hero />
       <TheGame />
-      <TheSwitch />
+      <MainFinding />
       <Positions />
+      <Templates />
       <Mechanism />
-      <Tournament />
+      <Occupancy />
       <WhyItMatters />
-      <Contribution />
+      <Degeneracy />
+      <NeuralLesson />
+      <Timeline />
+      <StatusAndQuestions />
+      <TechnicalLinks />
       <Footer />
     </>
   )
